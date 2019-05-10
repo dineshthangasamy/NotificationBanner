@@ -189,7 +189,7 @@ public class BaseNotificationBanner: UIView {
     
     deinit {
         NotificationCenter.default.removeObserver(self,
-                                                  name: UIDevice.orientationDidChangeNotification,
+                                                  name: UIApplication.didChangeStatusBarOrientationNotification,
                                                   object: nil)
     }
     
@@ -334,11 +334,11 @@ public class BaseNotificationBanner: UIView {
         }
         
         NotificationCenter.default.removeObserver(self,
-                                                  name: UIDevice.orientationDidChangeNotification,
+                                                  name: UIApplication.didChangeStatusBarOrientationNotification,
                                                   object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onOrientationChanged),
-                                               name: UIDevice.orientationDidChangeNotification,
+                                               name: UIApplication.didChangeStatusBarOrientationNotification,
                                                object: nil)
         
         if placeOnQueue {
@@ -438,14 +438,14 @@ public class BaseNotificationBanner: UIView {
         
         let edgeInsets = bannerEdgeInsets ?? .zero
 
-        let newY = (bannerPosition == .top) ? (frame.origin.y) : (appWindow.frame.height - bannerHeight + edgeInsets.top - edgeInsets.bottom)
+        let newY = (bannerPosition == .top) ? (frame.origin.y) : (appWindow.height - bannerHeight + edgeInsets.top - edgeInsets.bottom)
         frame = CGRect(x: frame.origin.x,
                        y: newY,
-                       width: appWindow.frame.width - edgeInsets.left - edgeInsets.right,
+                       width: appWindow.width - edgeInsets.left - edgeInsets.right,
                        height: bannerHeight)
     
         bannerPositionFrame = BannerPositionFrame(bannerPosition: bannerPosition,
-                                                  bannerWidth: appWindow.frame.width,
+                                                  bannerWidth: appWindow.width,
                                                   bannerHeight: bannerHeight,
                                                   maxY: maximumYPosition(),
                                                   edgeInsets: bannerEdgeInsets)
